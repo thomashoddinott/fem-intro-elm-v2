@@ -48,7 +48,7 @@ https://github.com/rtfeldman/elm-0.19-workshop/tree/master/intro
 
 `Main.elm` compiles to `elm.js`
 
-`elm Make Main.elm --output elm.js` 
+`elm make Main.elm --output elm.js` 
 
 ## Functions & if expressions
 
@@ -106,9 +106,28 @@ e.g.
 </ul>
 ```
 
-= 
+= this DOM tree:
 
 <img src="img/image-20210316144334336.png" alt="image-20210316144334336" width="200" />
 
+in Elm, we do it all with functions calls:
 
+```elm
+ul [ class "languages" ] 
+  [ li [] [ text "Elm" ] 
+  ,	li [] [ text "JS" ] -- commas on the left 
+]
+```
+
+`elm-format` will do it like this!
+
+## Intro Review + Q&A
+
+**todo - get my tryElm working**
+
+## Rendering a Page Exercise
+
+[part 1](./elm-0.19-workshop/intro/part1)
+
+## Strings 
 
