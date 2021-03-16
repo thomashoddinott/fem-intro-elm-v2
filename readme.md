@@ -127,7 +127,87 @@ ul [ class "languages" ]
 
 ## Rendering a Page Exercise
 
-[part 1](./elm-0.19-workshop/intro/part1)
+[part1 exercise](./elm-0.19-workshop/intro/part1)
 
 ## Strings 
 
+```elm
+"foo" ++ "bar" -> "foobar" -- concatenation
+```
+
+`String.fromInt` to convert integers to strings 
+
+```elm
+String.fromtInt quantity ++ " " ++ singular
+```
+
+## let Expressions
+
+```elm
+pluralize singular plural quanity = 
+	let
+		quantityStr = 
+			String.fromtInt quantity
+			
+		prefix = 
+			quantityStr ++ " "
+	in
+	if quantity == 1 then
+		prefix ++ singular
+		
+	else
+		prefix ++ plural
+```
+
+^ indentation matters in Elm
+
+## Lists
+
+```elm
+[ 1, 2, 3 ] -- under the hood it's an immuatable linked list 
+```
+
+```elm
+[ "foo", 65 ] -- will not compile in Elm
+```
+
+One data type only. Stops problems like this in JS:
+
+```js
+["pow", "zap", "blam", 500].map(
+	(str) => { return str.toUpperCase() + "!" }
+)
+// [ "POW!", "ZAP!", "BLAM!" ] for first 3 elements, then error!
+// toUpperCase exists only for strings
+```
+
+## Anonymous Functions
+
+```elm
+List.map (\str -> String.toUpper str ++ "!")
+	[ "pow", "zap", "blam" ]
+-- [ "POW!", "ZAP!", "BLAM!" ]
+```
+
+## Partial Application
+
+```elm
+List.map (pluralize "leaf" "leaves") [ 0, 1, 2 ] -- forget the 3rd arg "num"
+
+-- Elm returns this:
+(\num -> pluralize "leaf" "leaves" num)
+
+-- An anonymous fn with num to be provided once we have it
+```
+
+## Render a List to a View
+
+<img src="img/image-20210316162307762.png" alt="image-20210316162307762" width=600 />
+
+## Manipulating Values Exercise
+
+[part2 exercise](./elm-0.19-workshop/intro/part2)
+
+## Records
+
+https://frontendmasters.com/courses/intro-elm/records/
