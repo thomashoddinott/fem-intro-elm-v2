@@ -108,7 +108,7 @@ e.g.
 
 = 
 
-<img src="img/image-20210316144334336.png" alt="image-20210316144334336" style="zoom:33%;" />
+<img src="img/image-20210316144334336.png" alt="image-20210316144334336" width="200" />
 
 
 
