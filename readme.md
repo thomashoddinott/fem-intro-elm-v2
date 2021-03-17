@@ -1,3 +1,7 @@
+`sudo npm install -g elm elm-test elm-format`
+
+`elm repl` opens up an interactive programming session
+
 https://frontendmasters.com/courses/intro-elm/
 
 https://guide.elm-lang.org/
@@ -211,3 +215,120 @@ List.map (pluralize "leaf" "leaves") [ 0, 1, 2 ] -- forget the 3rd arg "num"
 ## Records
 
 https://frontendmasters.com/courses/intro-elm/records/
+
+```elm
+record =
+	{ name = "foo", x = 1, y = 3 }
+-- same as JS except '=' instead of ':'
+
+record.name -- ---> "foo"
+record.x -- ---> 1
+-- etc.
+```
+
+no prototypes, no **this**, no mutating - records hold plain, immutable data.
+
+```elm
+newRecord = 
+	{ name = "bar" 
+	, x = 1 
+	, y = 3
+	}
+-- define using vertical layout with commas at start 
+```
+
+## Record Iteration
+
+|             | **iteration** | **mixed entries** |
+| ----------- | ------------- | ----------------- |
+| **lists**   | supported     | unsupported       |
+| **records** | unsupported   | supported         |
+
+## Booleans
+
+`True`, `False` - capitalised
+
+```elm
+x == y
+not (x == y) -- ! in JS
+x /= y -- also !=
+x || y
+x && y
+```
+
+## Boolean Operations
+
+```elm
+List.member 1 [ 1, 2, 3 ] -- is 1 a member of this list?
+	True
+	
+List.member 9 [ 1, 2, 3 ]
+	False
+```
+
+```elm
+-- trying $ elm repl
+> l = [ 1, 2, 3 ]
+[1,2,3] : List number
+> isKeepable num = 
+l       :exit   :help   :quit   :reset
+> isKeepable num =
+|   num > 1
+<function> : number -> Bool
+> isKeepable
+<function> : number -> Bool
+> List.filter isKeepable l
+[2,3] : List number
+```
+
+```elm
+-- or inline with an anonymous fn
+List.filter (\num -> num > 1 ) [ 1, 2, 3 ]
+-- [2, 3]
+```
+
+## The Elm Architecture
+
+<img src="img/image-20210317095729051.png" alt="image-20210317095729051" width=600 />
+
+This runtime is bundled into the output JS everytime `make` is run.
+
+<img src="img/image-20210317095955343.png" alt="image-20210317095955343" width=600 />
+
+## The Elm Architecture: Update
+
+```elm
+update msg model = 
+	{ model | selectedTag = "elm" }
+-- keep model the same, but update selectedTag
+```
+
+```elm
+-- e.g. of a msg
+msg = {
+	description = "ClickedTag"
+	, data = "elm"
+	}
+```
+
+```elm
+-- update msg model
+button
+	[ onClick
+    	{ description = "ClickedTag" 
+    	, data = "elm"
+    	}
+	]
+	[ text "elm" ]
+```
+
+## Interaction Exercise
+
+[part 3 exercise](./elm-0.19-workshop/intro/part3)
+
+`elm install <package name>`
+
+
+
+
+
