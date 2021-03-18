@@ -433,5 +433,151 @@ update msg model =
 
 [part 4 exercise](./elm-0.19-workshop/intro/part4)
 
+## Case Expressions 
+
+```elm
+case model.tab of
+	"YourFeed" -> 
+		-- show Your Feed
+	"GlobalFeed" ->
+		-- show Global Feed
+	_ ->
+		-- show Tag Feed
+```
+
+## Variants & Booleans
+
+```elm
+type Tab =
+	YourFeed | GlobalFeed | TagFeed -- custom type
+```
+
+could be implemented like:
+
+```elm
+yours : Tab
+yours = 
+	YourFeed
+	
+global : Tab
+global = 
+	GlobalFeed
+
+tag : Tab
+tag =
+	TagFeed
+```
+
+Bool is actually a custom type:
+
+```elm
+type Bool
+	= True
+	| False
+```
+
+## Custom Types in Case Expressions
+
+```elm
+case model.tab of
+	YourFeed -> 
+		-- show your feed
+	GlobalFeed ->
+		-- show global feed
+	TagFeed ->
+		-- show tag feed
+	
+	-- no default case is better in Elm
+```
+
+## Containers
+
+```elm
+type Tab
+	= YourFeed
+	| GlobalFeed
+	| TagFeed String
+```
+
+```elm
+yours : Tab
+yours =
+	YourFeed
+	
+happiness : Tab
+happiness = 
+	TagFeed "happiness" -- must pass string now
+```
+
+```elm
+case model.tab of
+	YourFeed -> 
+		-- show your feed
+	GlobalFeed ->
+		-- show global feed
+	TagFeed selectedTag -> -- e.g. passing in "happiness"
+		-- show tag feed
+```
+
+Now `Tab` is a container that situation-ally holds information (when on TagFeed).
+
+"Custom types are the most important feature of Elm"
+	-- The creator of Elm
+
+## Custom Types in Messages
+
+```elm
+type alias Msg = 
+	{ description : String
+	, stringData : String
+	, intData : Int
+	}
+	
+	{ description : "ClickedTag"
+	, stringData : "cars"
+	, intData : -1 -- need to set to sth like -1 because we don't need it
+	}
+	
+	{ description : "ClickedPage"
+	, stringData : "" -- need to set to "" because we don't need it
+	, intData : 2
+	}
+```
+
+^ This is what happens when you use records as messages in Elm. You end up fudging the record so it interacts properly.
+
+Consider this, instead:
+
+```elm
+type Msg
+	= clickedTag String
+	| clickedPage Int
+```
+
+^ We clicked *either* a tag or a page.
+
+```elm
+update msg model = 
+	case msg of
+		ClickedTag selectedTag ->
+			-- use tag here
+		ClickedPage page ->
+			-- use page here
+```
+
+Custom types work great with messages!
+
+ ```elm
+type Msg
+	= clickedTag String
+	| clickedPage Int
+	
+pageButton : Int -> Html Msg
+pageButton pageNumber = 
+	button [ onClick (ClickedPage pageNumber) ] [ text (String.fromInt pageNumber) ]
+ ```
+
+
+
 
 
