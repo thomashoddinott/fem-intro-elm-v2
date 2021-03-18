@@ -328,7 +328,110 @@ button
 
 `elm install <package name>`
 
+## Type Annotation Overview
 
+```elm
+username : String
+username = "rtfeldman"
+```
+
+Considered best practice to use them at least for your top-level declarations.
+
+## Primitives & Records
+
+```elm
+totalPages : Int
+totalPages = 5
+
+isActive : Bool
+isActive = True
+```
+
+```elm
+add : Int -> Int -> Int
+add a b =
+    a + b
+```
+
+```elm
+-- ":" is for types
+searchResult : { name : String, stars: Int }
+-- "=" is for values
+searchResult = { name = "blah", starts = 215 }
+```
+
+## Parameters
+
+```elm
+names : List Strings -- names is a list of strings
+-- Lists are a parameterized type. Lists need a type!
+names = [ "Sam", "Casey", "Pat" ]
+
+names : List Float
+names = [ 1.1, 2.2, 3.3 ]
+
+-- etc.
+```
+
+## Aliases
+
+```elm
+type alias Article = 
+	{ title : String
+	, tags : List String
+	, body : String
+	}
+	
+type alias Model = 
+	{ selectedTag : String
+	, articles : List Article
+	}
+	
+-- more concise than writing a nested obj
+```
+
+## HTML Msg
+
+```elm
+view model = 
+	button
+		[ onClick 
+			{ description = "ClickedClear" 
+			, data = "ALL"
+			}
+		]
+		[ text "X" ]
+```
+
+We don't have to pass a record message. It can be simplified to:
+
+```elm
+view : Model -> Html String
+view model = 
+	button [ onClick "ClickedClear" ] [ text "X" ]
+```
+
+as long as you are consistent with your format, e.g. `Html String`.
+
+## Functions
+
+```elm
+type alias Msg =
+	{ description : String
+	, data : String
+	}
+
+view : Model -> Html Msg
+view model = 
+
+
+update : Msg -> Model -> Model
+update msg model = 
+```
+
+## Type Annotations Exercise
+
+[part 4 exercise](./elm-0.19-workshop/intro/part4)
 
 
 
