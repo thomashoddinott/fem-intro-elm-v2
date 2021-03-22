@@ -577,7 +577,19 @@ pageButton pageNumber =
 	button [ onClick (ClickedPage pageNumber) ] [ text (String.fromInt pageNumber) ]
  ```
 
+## Custom Types Exercise 
 
+[part 5 exercise](./elm-0.19-workshop/intro/part5)
+
+`elm make src/Main.e
+lm --output ../server/public/elm.js`
+
+run server from `/intro/server` :
+
+```
+npm install
+npm start
+```
 
 
 
