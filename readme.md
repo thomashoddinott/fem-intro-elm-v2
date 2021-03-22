@@ -683,6 +683,104 @@ type Maybe val -- val is a type variable
 
 [part 6 exercise](./elm-0.19-workshop/intro/part6)
 
+## Decoding
+
+in JS:
+
+```js
+parseInt "42" --> 42
+parseInt "hi" --> NaN
+```
+
+in Elm:
+
+```elm
+case String.toInt str of
+	Just num ->
+		num * 10
+	
+	Nothing ->
+		0
+```
+
+```elm
+String.toInt "42" --> Just 42
+String.toInt "hi" --> Nothing
+--
+type Maybe val
+	= Just val
+	| Nothing
+```
+
+## Pipeline Decoding:
+
+Consider this JSON:
+
+```json
+{
+    "user_id": 27,
+    "first_name": "Al",
+    "last_name": "Kai"
+}
+```
+
+```elm
+type alias User =
+	{ id : Int 
+	, firstName : String
+	, lastName : String
+	}
+```
+
+Field names don't need to match `user_id --> id` etc.
+
+Types don't need to map too. Can be mapped to a custom type, for example.
+
+Let's write a JSON decoder:
+
+```elm
+user : Decoder User
+user =
+	Json.Decode.succeed User -- if decoding succeeds, use this fn to build the result
+		|> required "user_id" int -- Json.Decode.Int
+		|> required "first_name" string -- Json.Decode.String
+		|> required "last_name" string -- Json.Decode.String
+```
+
+## Optional & Nullable
+
+consider this:
+
+```json
+{
+    "user_id": 27,
+    "name": null
+}
+```
+
+```elm
+type alias User =
+	{ id : Int
+	, name : Maybe String
+	, email : String
+	}
+```
+
+```elm
+user : Decoder User
+user = 
+	Json.Decode.succeed User
+		|> required "user_id" int -- null not OK! --> we want to fail
+		|> required "name" (nullable string) -- here we say that it can be null, that's OK
+		|> optional "email" string "me@foo.com" -- if not present, fallback on default
+```
+
+## Decoding JSON Exercise
+
+[part 7 exercise](./elm-0.19-workshop/intro/part7)
+
+
+
 
 
 
