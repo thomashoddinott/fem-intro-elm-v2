@@ -779,13 +779,162 @@ user =
 
 [part 7 exercise](./elm-0.19-workshop/intro/part7)
 
+## Tuples
 
+Tuples serve the same puropose as records
 
+except with **field positions** instead of **field names**
 
+```elm
+x = Tuple.first ( 5, 7 )
+( name, x, y ) = ( "foo", 5, 7 ) -- desctructing 
 
+x = { x = 5, y = 7 }.x -- as a record
 
+{ name, x, y } = { name = "foo", x = 5, y = 7 } -- record destructuring -- fields must match!
+```
 
+Tuples are limited to 3 elements!
 
+```elm
+> a = ( 1, 2, 3, 4 )
+-- BAD TUPLE -------------------------------------------------------------- REPL
+
+I only accept tuples with two or three items. This has too many:
+
+2| a = ( 1, 2, 3, 4 )
+       ^^^^^^^^^^^^^^
+I recommend switching to records. Each item will be named, and you can use the
+`point.x` syntax to access them.
+
+Note: Read <https://elm-lang.org/0.19.1/tuples> for more comprehensive advice on
+working with large chunks of data in Elm.
+```
+
+records and tuples are nothing more than groups of values that travel together.
+
+```elm
+animate { name = "foo", x = 1, y = 3 }
+-- or 
+animate ( "foo", 1, 3 )
+-- or
+animate "foo" 1 3
+```
+
+...but custom types can be much more!
+
+## Function Guarantees, Randomness & Commands
+
+**same** arguments --> **same** return value
+
+in JS:
+
+```js
+> Math.random() // returns different result each time
+0.8975191363997552
+> Math.random()
+0.005415975186105371
+> Math.random()
+0.7246982292936115
+```
+
+^ in Elm we have `Random.generate` 
+
+Another example:
+
+```elm
+pickGreeting : List String -> String
+-- returns same greeting each time; can't use this
+```
+
+```elm
+pickGreeting : List String -> Cmd Msg
+```
+
+**Without commands:**
+
+<img src="img/image-20210322140123765.png" alt="image-20210322140123765" width=600 />
+
+**With commands:**
+
+<img src="img/image-20210322140611679.png" alt="image-20210322140611679" width=600 />
+
+*commands* come from *update*
+
+A command is a description of something you want done
+
+`Random.generate` gives us a command message: "runtime, go randomly pick something and send me a message telling me what you've picked"
+
+## Browser.element
+
+`Browser.sandbox`
+
+```elm
+update : Msg -> Model -> ( Model, Cmd Msg )
+```
+
+## Pure Functions
+
+**same** argument --> **same** result AND fns have **no side effects** (no modifying external state).
+
+Consider a fire-and-forget HTTP POST:
+
+:heavy_check_mark: same args, same result
+
+:x: does not modify external state
+
+^ So elm does **managed effects** - any side effects have to be done through commands. This guarantees every fn in elm is pure.
+
+## HTTP.getString
+
+```elm
+getString : String -> Request String -- Request is a description of the params of the HTTP Request, but doesn't handle what could go wrong. Intermediate step to a command.
+```
+
+Then, `Http.send`: Request --> Cmd
+
+translate failure into a Msg
+	or
+translate success into a Msg
+
+```elm
+Http.send
+	(\result -> CompletedLoadFeed result)
+	(Http.getString "/feed?tag=happiness")
+
+-- can write like:
+Http.send
+	CompletedLoadFeed
+	(Http.getString "/feed?tag=happiness")
+
+-- or, as a pipeline:
+Http.getString "/feed?tag=happiness"
+	|> Http.send CompletedLoadFeed
+```
+
+## Http.get & Pattern Matching
+
+```elm
+CompletedLoadFeed (Result Error (list Article))
+
+-- success only gives you a String
+Http.getString url
+
+-- success gives you a List Article
+Http.get articlesDecoder url -- takes additional Decoder arg
+	
+	-- pattern matching
+	case msg of 
+		CompletedLoadFeed (Ok articles) ->
+			...
+		
+		CompletedLoadFeed (Err error) ->
+			...
+```
+
+## Talking to Servers Exercise
+
+[part 8 exercise](./elm-0.19-workshop/intro/part8)
 
 
 
