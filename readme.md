@@ -591,5 +591,103 @@ npm install
 npm start
 ```
 
+## Maybe Overview
+
+consider this JS snippet:
+
+```js
+> first = (users) => {
+... return users[0];
+... }
+[Function: first]
+> first(["Sam", "Jess"])
+'Sam'
+> first([])
+undefined
+
+> const newUsers = ["Sam", "Jess"]
+undefined
+> first(newUsers).length
+3
+// but if newUsers = [], we'd get an error: Uncaught TypeError: Cannot read property 'length' of undefined
+```
+
+and in Elm:
+
+```elm
+> first users = List.head users
+<function> : List a -> Maybe a
+> first ["Sam", "Jess"]
+Just "Sam" : Maybe String
+> first []
+Nothing : Maybe a
+
+> newUsers = ["Sam", "Jess"]
+["Sam","Jess"] : List String
+> case first newUsers of
+|   Just user ->
+|       String.length user
+|   Nothing ->
+|       0
+3 : Int
+-- or 0 when newUsers = []
+-- because we define the [] case, we don't get an error like in JS
+```
+
+```elm
+> List.head [ "Sam", "Jess" ]
+Just "Sam" : Maybe String
+> List.head [ 3.14, 7.77 ]
+Just 3.14 : Maybe Float
+> List.head [ True, False ]
+Just True : Maybe Bool
+> -- what type is List.head ???
+List.head : List elem -> Maybe elem
+```
+
+`elem` is a **Type Variable**
+
+```elm
+-- e.g.
+List.reverse : List item -> List item
+List.reverse   [ 1, 2, 3 ] -> [ 3, 2, 1 ]
+```
+
+what is the type of Maybe?
+
+```elm
+type Maybe val -- val is a type variable
+	= Just val
+	| Nothing
+```
+
+^ this allows us to have Maybes of different types
+
+## Pipelines & Review
+
+```elm
+-- e.g.
+> List.reverse (List.filter (\x -> x < 5) [ 2, 4, 6 ])
+[4,2] : List number
+
+-- or in pipeline style:
+> [ 2, 4, 6 ] 
+	|> List.filter(\x -> x < 5) 
+	|> List.reverse
+[4,2] : List number
+```
+
+^ esepcially with big pipelines, sometimes assigning intermediate values and breaking a pipeline up is better!
+
+## Maybe & Pipelines Exercise
+
+[part 6 exercise](./elm-0.19-workshop/intro/part6)
+
+
+
+
+
+
+
 
 
