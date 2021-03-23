@@ -29,7 +29,7 @@ Install elm: `sudo npm install -g elm elm-test elm-format`
     + [Render a List to a View](#render-a-list-to-a-view)
     + [Manipulating Values Exercise](#manipulating-values-exercise)
   * [Interaction](#interaction)
-  * [Records](#records)
+    + [Records](#records)
     + [Record Iteration](#record-iteration)
     + [Booleans](#booleans)
     + [Boolean Operations](#boolean-operations)
@@ -281,7 +281,7 @@ List.map (pluralize "leaf" "leaves") [ 0, 1, 2 ] -- forget the 3rd arg "num"
 
 ## Interaction
 
-## Records
+### Records
 
 https://frontendmasters.com/courses/intro-elm/records/
 
@@ -1171,7 +1171,9 @@ Who owns this state? Elm, or JS?
 - "No runtime exceptions"
 
 - Incremental adoption - try Elm on one page, get into production, do we like it? That's how most people start off and end up adopting Elm.
+
 - Elm Architecture
+  
   <img src="img/image-20210323104708452.png" alt="image-20210323104708452" width=600/>
 
 ### Resources
