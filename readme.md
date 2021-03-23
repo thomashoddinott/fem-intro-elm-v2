@@ -1,30 +1,24 @@
 # Introduction to Elm, v2
 
-`sudo npm install -g elm elm-test elm-format`
+My notes on the FEM course - https://frontendmasters.com/courses/intro-elm/
+
+Install elm: `sudo npm install -g elm elm-test elm-format`
 
 `elm repl` opens up an interactive programming session
-
-https://frontendmasters.com/courses/intro-elm/
-
-https://guide.elm-lang.org/
-
-https://www.reddit.com/r/elm/comments/g1nonf/is_it_still_useful_to_learn_elm/fngpizy?utm_source=share&utm_medium=web2x&context=3
-
-https://www.reddit.com/r/elm/comments/g1nonf/is_it_still_useful_to_learn_elm/fngpz49?utm_source=share&utm_medium=web2x&context=3
 
 ## Contents
 
 [TOC]
 
+## Course Introduction
 
-
-## Introduction
+### Introduction
 
 There are several languages which compile to JS. CoffeeScript, Babel, TypeScript, Elm, ... 
 
 Some of these are syntactically similar to JS. Elm is not.
 
-## Costs & Benefits
+### Costs & Benefits
 
 **Costs**
 
@@ -48,7 +42,7 @@ Cohesive, high-quality ecosystem
 - JS projects require a lot of hard decisions: Which dialect of React? - JS or TS, Babel? Which UI framework? - React, Vue, vanilla JS? What about state? Utilities? etc. Is it all compatible?
 - Elm has a single ecosystem to handle everything
 
-## Workshop Structure 
+### Workshop Structure 
 
 https://github.com/gothinkster/realworld
 
@@ -58,7 +52,9 @@ https://github.com/rtfeldman/elm-0.19-workshop/tree/master/intro
 
 `elm make Main.elm --output elm.js` 
 
-## Functions & if expressions
+## Elm Introduction
+
+### Functions & if expressions
 
 A fn in JS:
 
@@ -84,7 +80,7 @@ pluralize singular plural quantity =
 		plural
 ```
 
-## Nested Function Expressions
+### Nested Function Expressions
 
 Using the `pluralize` function in Elm:
 
@@ -95,13 +91,13 @@ main = -- this is an inline comment
 
 parenthesis are used to disambiguate 
 
-## Smart Compile Errors
+### Smart Compile Errors
 
 Elm, like TS, catches a lot of errors at compile time.
 
 Elm has type inference running everywhere. Really, everywhere! There's no `<any>` escape hatch that we have in TS!
 
-## Virtual DOM
+### Virtual DOM
 
 HTML describes the DOM structure.
 
@@ -129,15 +125,13 @@ ul [ class "languages" ]
 
 `elm-format` will do it like this!
 
-## Intro Review + Q&A
+### Rendering a Page Exercise
 
-**todo - get my tryElm working**
+[part 1 exercise](./elm-0.19-workshop/intro/part1)
 
-## Rendering a Page Exercise
+## Manipulating Values
 
-[part1 exercise](./elm-0.19-workshop/intro/part1)
-
-## Strings 
+### Strings 
 
 ```elm
 "foo" ++ "bar" -> "foobar" -- concatenation
@@ -149,7 +143,7 @@ ul [ class "languages" ]
 String.fromtInt quantity ++ " " ++ singular
 ```
 
-## let Expressions
+### let Expressions
 
 ```elm
 pluralize singular plural quanity = 
@@ -169,7 +163,7 @@ pluralize singular plural quanity =
 
 ^ indentation matters in Elm
 
-## Lists
+### Lists
 
 ```elm
 [ 1, 2, 3 ] -- under the hood it's an immuatable linked list 
@@ -189,7 +183,7 @@ One data type only. Stops problems like this in JS:
 // toUpperCase exists only for strings
 ```
 
-## Anonymous Functions
+### Anonymous Functions
 
 ```elm
 List.map (\str -> String.toUpper str ++ "!")
@@ -197,7 +191,7 @@ List.map (\str -> String.toUpper str ++ "!")
 -- [ "POW!", "ZAP!", "BLAM!" ]
 ```
 
-## Partial Application
+### Partial Application
 
 ```elm
 List.map (pluralize "leaf" "leaves") [ 0, 1, 2 ] -- forget the 3rd arg "num"
@@ -208,13 +202,15 @@ List.map (pluralize "leaf" "leaves") [ 0, 1, 2 ] -- forget the 3rd arg "num"
 -- An anonymous fn with num to be provided once we have it
 ```
 
-## Render a List to a View
+### Render a List to a View
 
 <img src="img/image-20210316162307762.png" alt="image-20210316162307762" width=600 />
 
-## Manipulating Values Exercise
+### Manipulating Values Exercise
 
-[part2 exercise](./elm-0.19-workshop/intro/part2)
+[part 2 exercise](./elm-0.19-workshop/intro/part2)
+
+## Interaction
 
 ## Records
 
@@ -241,14 +237,14 @@ newRecord =
 -- define using vertical layout with commas at start 
 ```
 
-## Record Iteration
+### Record Iteration
 
 |             | **iteration** | **mixed entries** |
 | ----------- | ------------- | ----------------- |
 | **lists**   | supported     | unsupported       |
 | **records** | unsupported   | supported         |
 
-## Booleans
+### Booleans
 
 `True`, `False` - capitalised
 
@@ -260,7 +256,7 @@ x || y
 x && y
 ```
 
-## Boolean Operations
+### Boolean Operations
 
 ```elm
 List.member 1 [ 1, 2, 3 ] -- is 1 a member of this list?
@@ -291,7 +287,7 @@ List.filter (\num -> num > 1 ) [ 1, 2, 3 ]
 -- [2, 3]
 ```
 
-## The Elm Architecture
+### The Elm Architecture
 
 <img src="img/image-20210317095729051.png" alt="image-20210317095729051" width=600 />
 
@@ -299,7 +295,7 @@ This runtime is bundled into the output JS everytime `make` is run.
 
 <img src="img/image-20210317095955343.png" alt="image-20210317095955343" width=600 />
 
-## The Elm Architecture: Update
+### The Elm Architecture: Update
 
 ```elm
 update msg model = 
@@ -326,13 +322,15 @@ button
 	[ text "elm" ]
 ```
 
-## Interaction Exercise
+### Interaction Exercise
 
 [part 3 exercise](./elm-0.19-workshop/intro/part3)
 
 `elm install <package name>`
 
-## Type Annotation Overview
+## Type Annotations
+
+### Type Annotation Overview
 
 ```elm
 username : String
@@ -341,7 +339,7 @@ username = "rtfeldman"
 
 Considered best practice to use them at least for your top-level declarations.
 
-## Primitives & Records
+### Primitives & Records
 
 ```elm
 totalPages : Int
@@ -364,7 +362,7 @@ searchResult : { name : String, stars: Int }
 searchResult = { name = "blah", starts = 215 }
 ```
 
-## Parameters
+### Parameters
 
 ```elm
 names : List Strings -- names is a list of strings
@@ -377,7 +375,7 @@ names = [ 1.1, 2.2, 3.3 ]
 -- etc.
 ```
 
-## Aliases
+### Aliases
 
 ```elm
 type alias Article = 
@@ -394,7 +392,7 @@ type alias Model =
 -- more concise than writing a nested obj
 ```
 
-## HTML Msg
+### HTML Msg
 
 ```elm
 view model = 
@@ -417,7 +415,7 @@ view model =
 
 as long as you are consistent with your format, e.g. `Html String`.
 
-## Functions
+### Functions
 
 ```elm
 type alias Msg =
@@ -433,11 +431,13 @@ update : Msg -> Model -> Model
 update msg model = 
 ```
 
-## Type Annotations Exercise
+### Type Annotations Exercise
 
 [part 4 exercise](./elm-0.19-workshop/intro/part4)
 
-## Case Expressions 
+## Custom Types
+
+### Case Expressions 
 
 ```elm
 case model.tab of
@@ -449,7 +449,7 @@ case model.tab of
 		-- show Tag Feed
 ```
 
-## Variants & Booleans
+### Variants & Booleans
 
 ```elm
 type Tab =
@@ -480,7 +480,7 @@ type Bool
 	| False
 ```
 
-## Custom Types in Case Expressions
+### Custom Types in Case Expressions
 
 ```elm
 case model.tab of
@@ -494,7 +494,7 @@ case model.tab of
 	-- no default case is better in Elm
 ```
 
-## Containers
+### Containers
 
 ```elm
 type Tab
@@ -528,7 +528,7 @@ Now `Tab` is a container that situation-ally holds information (when on TagFeed)
 "Custom types are the most important feature of Elm"
 	-- The creator of Elm
 
-## Custom Types in Messages
+### Custom Types in Messages
 
 ```elm
 type alias Msg = 
@@ -581,7 +581,7 @@ pageButton pageNumber =
 	button [ onClick (ClickedPage pageNumber) ] [ text (String.fromInt pageNumber) ]
  ```
 
-## Custom Types Exercise 
+### Custom Types Exercise 
 
 [part 5 exercise](./elm-0.19-workshop/intro/part5)
 
@@ -595,7 +595,9 @@ npm install
 npm start
 ```
 
-## Maybe Overview
+## Maybe
+
+### Maybe Overview
 
 consider this JS snippet:
 
@@ -638,6 +640,8 @@ Nothing : Maybe a
 -- because we define the [] case, we don't get an error like in JS
 ```
 
+### Type Variables
+
 ```elm
 > List.head [ "Sam", "Jess" ]
 Just "Sam" : Maybe String
@@ -667,7 +671,7 @@ type Maybe val -- val is a type variable
 
 ^ this allows us to have Maybes of different types
 
-## Pipelines & Review
+### Pipelines & Review
 
 ```elm
 -- e.g.
@@ -683,11 +687,13 @@ type Maybe val -- val is a type variable
 
 ^ esepcially with big pipelines, sometimes assigning intermediate values and breaking a pipeline up is better!
 
-## Maybe & Pipelines Exercise
+### Maybe & Pipelines Exercise
 
 [part 6 exercise](./elm-0.19-workshop/intro/part6)
 
-## Decoding
+## Decoding JSON
+
+### Decoding
 
 in JS:
 
@@ -716,7 +722,7 @@ type Maybe val
 	| Nothing
 ```
 
-## Pipeline Decoding:
+### Pipeline Decoding:
 
 Consider this JSON:
 
@@ -751,7 +757,7 @@ user =
 		|> required "last_name" string -- Json.Decode.String
 ```
 
-## Optional & Nullable
+### Optional & Nullable
 
 consider this:
 
@@ -779,11 +785,13 @@ user =
 		|> optional "email" string "me@foo.com" -- if not present, fallback on default
 ```
 
-## Decoding JSON Exercise
+### Decoding JSON Exercise
 
 [part 7 exercise](./elm-0.19-workshop/intro/part7)
 
-## Tuples
+## Talking to Servers
+
+### Tuples
 
 Tuples serve the same puropose as records
 
@@ -827,7 +835,7 @@ animate "foo" 1 3
 
 ...but custom types can be much more!
 
-## Function Guarantees, Randomness & Commands
+### Function Guarantees, Randomness & Commands
 
 **same** arguments --> **same** return value
 
@@ -869,7 +877,7 @@ A command is a description of something you want done
 
 `Random.generate` gives us a command message: "runtime, go randomly pick something and send me a message telling me what you've picked"
 
-## Browser.element
+### Browser.element
 
 `Browser.sandbox`
 
@@ -877,7 +885,7 @@ A command is a description of something you want done
 update : Msg -> Model -> ( Model, Cmd Msg )
 ```
 
-## Pure Functions
+### Pure Functions
 
 **same** argument --> **same** result AND fns have **no side effects** (no modifying external state).
 
@@ -889,7 +897,7 @@ Consider a fire-and-forget HTTP POST:
 
 ^ So elm does **managed effects** - any side effects have to be done through commands. This guarantees every fn in elm is pure.
 
-## HTTP.getString
+### HTTP.getString
 
 ```elm
 getString : String -> Request String -- Request is a description of the params of the HTTP Request, but doesn't handle what could go wrong. Intermediate step to a command.
@@ -916,7 +924,7 @@ Http.getString "/feed?tag=happiness"
 	|> Http.send CompletedLoadFeed
 ```
 
-## Http.get & Pattern Matching
+### Http.get & Pattern Matching
 
 ```elm
 CompletedLoadFeed (Result Error (list Article))
@@ -936,11 +944,13 @@ Http.get articlesDecoder url -- takes additional Decoder arg
 			...
 ```
 
-## Talking to Servers Exercise
+### Talking to Servers Exercise
 
 [part 8 exercise](./elm-0.19-workshop/intro/part8)
 
-## Subscriptions
+## Talking to JavaScript
+
+### Subscriptions
 
 **Responding to Custom Events**
 
@@ -967,7 +977,7 @@ Browser.onMouseMove : Decoder msg -> Sub msg
 
 e.g. mouse moves, web sockets
 
-## The JavaScript Ecosystem
+### The JavaScript Ecosystem
 
 All Elm functionns are **pure**; not so in JS.
 
@@ -989,7 +999,7 @@ List.reverse : List val  -> List val
 List.length  : List a    -> Int
 ```
 
-## Unbound Type Variables
+### Unbound Type Variables
 
 ```elm
 [ 1.1, 2.2 ] : List Float
@@ -1038,7 +1048,7 @@ Cmd msg
 
 So we can talk to JS in a fire-and-forget manner. There's no callback on the Elm side.
 
-## port Modules, localForage & Review
+### port Modules, localForage & Review
 
 We talk to JS through **ports**, so we need the port module in Elm.
 
@@ -1075,11 +1085,32 @@ Who owns this state? Elm, or JS?
 
 `localForage` owns the session, so for us: JS owns the state; Elm caches it.
 
-## Talking to JS Exercise
+### Talking to JS Exercise
 
 [part 9 exercise](./elm-0.19-workshop/intro/part9)
 
+## Wrapping Up
 
+### Review
 
+- Elm compiles to JS.
 
+- Used by: 
 
+<img src="img/image-20210323104432069.png" alt="image-20210323104432069" width=600 />
+
+- "No runtime exceptions"
+
+- Incremental adoption - try Elm on one page, get into production, do we like it? That's how most people start off and end up adopting Elm.
+- Elm Architecture
+  <img src="img/image-20210323104708452.png" alt="image-20210323104708452" width=600/>
+
+### Resources
+
+- https://github.com/rtfeldman/elm-spa-example - final version of elm demo app
+- https://guide.elm-lang.org/
+- his book - https://www.manning.com/books/elm-in-action
+- http://elmlang.herokuapp.com/ - Elm slack community
+- https://discourse.elm-lang.org/ - Elm forum
+- https://faq.elm-community.org/
+- https://player.fm/series/elm-town - Elm Town podcast
