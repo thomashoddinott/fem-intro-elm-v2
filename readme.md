@@ -1,3 +1,5 @@
+# Introduction to Elm, v2
+
 `sudo npm install -g elm elm-test elm-format`
 
 `elm repl` opens up an interactive programming session
@@ -10,9 +12,11 @@ https://www.reddit.com/r/elm/comments/g1nonf/is_it_still_useful_to_learn_elm/fng
 
 https://www.reddit.com/r/elm/comments/g1nonf/is_it_still_useful_to_learn_elm/fngpz49?utm_source=share&utm_medium=web2x&context=3
 
----
+## Contents
 
-# Introduction to Elm, v2
+[TOC]
+
+
 
 ## Introduction
 
@@ -935,6 +939,147 @@ Http.get articlesDecoder url -- takes additional Decoder arg
 ## Talking to Servers Exercise
 
 [part 8 exercise](./elm-0.19-workshop/intro/part8)
+
+## Subscriptions
+
+**Responding to Custom Events**
+
+(Translating JS to Elm)
+
+```elm
+on : String -> Decoder msg -> Attribute msg
+-- e.g.
+div [ on "mousemove" mousePointDecoder ] [...]
+```
+
+**Responding to Window Events**
+
+windows don't have attributes...
+
+```elm
+Browser.onMouseMove : Decoder msg -> Sub msg
+--                               | Subscription |
+```
+
+**Subscriptions** are another path to *update* (the brain of the Elm app). They are "event listeners that are global".
+
+<img src="img/image-20210323095654216.png" alt="image-20210323095654216" width=600 />
+
+e.g. mouse moves, web sockets
+
+## The JavaScript Ecosystem
+
+All Elm functionns are **pure**; not so in JS.
+
+How do we access the enourmous JS ecosystem, while maintaining the guarantees of Elm?
+
+**--> "client/server" communication**
+
+Elm sends data to JS. Js sends data to Elm. No direct function calls.
+
+Cmd on Elm --> callback on JS
+
+Cmd ~~Msg~~ --> Cmd msg (lowercase = a type variable)
+
+Recall: 
+
+```elm
+List.head    : List elem -> Maybe elem
+List.reverse : List val  -> List val
+List.length  : List a    -> Int
+```
+
+## Unbound Type Variables
+
+```elm
+[ 1.1, 2.2 ] : List Float
+[ "a", "b "] : List String
+-- etc.
+-- what about an empty list [] ?
+[] : List a
+```
+
+```elm
+-- e.g.
+String.concat : List String -> String
+String.concat [ "ab", "c" ] -> "abc"
+String.concat []            -> ""
+
+String.lines : String -> List String
+String.lines "A\nB"   -> [ "A", "B" ]
+String.lines ""       -> []
+```
+
+```elm
+[] : List a
+
+div [ onClick Toggle ] [] : Html Msg
+
+img [ src "logo.png" ] [] : Html a -- html with an unbound type variable
+
+img [ src "logo.png" ] [] : Html msg -- also
+```
+
+So,
+
+```elm
+Cmd Msg
+-- produces messages of type Msg
+-- works with update functions that accept Msg
+```
+
+and
+
+```elm
+Cmd msg
+-- I don't produce any messages
+-- Therefore I work with any update function!
+```
+
+So we can talk to JS in a fire-and-forget manner. There's no callback on the Elm side.
+
+## port Modules, localForage & Review
+
+We talk to JS through **ports**, so we need the port module in Elm.
+
+```elm
+port storeSession : Maybe String -> Cmd msg -- make me a function that accepts a 'Maybe String', send that to JS, and return a command to do that when executed. Nothing else after that.
+
+port onSessionChange : (String -> msg) -> Sub msg
+```
+
+Elm creates the implementation.
+
+On JS side:
+
+```js
+var app = Elm.Main.init({flags: session}); // store session 
+
+// subscribe to session command
+app.ports.storeSession.subscribe(function(str){
+    // ... taking the str (Maybe String) from Elm
+});
+
+app.ports.onSessionChange.send(someString); // passing info back to Elm
+```
+
+Storing session data in `localForage`
+
+```js
+localForage.getItem("key", function(val) { ... })
+// or
+localForage.setItem("key", "val", function() { ... })
+```
+
+Who owns this state? Elm, or JS?
+
+`localForage` owns the session, so for us: JS owns the state; Elm caches it.
+
+## Talking to JS Exercise
+
+[part 9 exercise](./elm-0.19-workshop/intro/part9)
+
+
 
 
 

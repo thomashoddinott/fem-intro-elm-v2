@@ -32,7 +32,9 @@
         var app = Elm.Main.init({flags: session});
 
         app.ports.storeSession.subscribe(function(newSession) {
+          console.log("got a new session", newSession)
           localforage.setItem("session", newSession, function() {
+            console.log("session changed", newSession)
             app.ports.onSessionChange.send(newSession);
           });
         });
